@@ -2,7 +2,7 @@
 #include <sstream>
 #include <map>
 #include <string>
-
+#include <vector>
 
 void parseCommand(const std::string& command) {
     // Use a stringstream to parse the command
@@ -21,8 +21,9 @@ void parseCommand(const std::string& command) {
         ss.seekg(keyword.length(), std::ios::beg);  // Rewind to start parsing tags
     }
 
-    // Map to store tag-value pairs
-    std::map<std::string, std::string> tags;
+    // Map to store tag-value pairs and vector to store tags without values
+    std::map<std::string, std::string> tagsWithValues;
+    std::vector<std::string> tagsWithoutValues;
 
     std::string tag;
     std::string value;
@@ -30,11 +31,18 @@ void parseCommand(const std::string& command) {
     // Loop through the rest of the command to extract tags and values
     while (ss >> tag) {
         if (tag[0] == '-') {  // Check if it is a tag (starts with '-')
-            if (ss >> value) {
-                tags[tag] = value; // Store it in the map
+            ss >> value;
+            if (value[0] == '-') {
+                // If the value starts with '-', it means the tag has no value
+                tagsWithoutValues.push_back(tag);
+                // Put the value back for the next iteration (as it's actually the next tag)
+                ss.putback(' ');  // Put back the space
+                for (int i = value.length() - 1; i >= 0; --i) {
+                    ss.putback(value[i]);
+                }
             } else {
-                std::cerr << "Error: Missing value for tag " << tag << std::endl;
-                return;
+                // If the value doesn't start with '-', store the tag-value pair
+                tagsWithValues[tag] = value;
             }
         } else {
             std::cerr << "Error: Unexpected token " << tag << " (tags should start with '-')" << std::endl;
@@ -49,9 +57,13 @@ void parseCommand(const std::string& command) {
     } else {
         std::cout << "Main value: (none)" << std::endl;
     }
-    std::cout << "Tags and values:" << std::endl;
-    for (const auto& pair : tags) {
+    std::cout << "Tags with values:" << std::endl;
+    for (const auto& pair : tagsWithValues) {
         std::cout << "  " << pair.first << " : " << pair.second << std::endl;
+    }
+    std::cout << "Tags without values:" << std::endl;
+    for (const auto& t : tagsWithoutValues) {
+        std::cout << "  " << t << std::endl;
     }
 }
 
