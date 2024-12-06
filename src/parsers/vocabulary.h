@@ -7,6 +7,7 @@ namespace vocab
   #include <string>
   using std::string;
     // constants have internal linkage by default
+    // should i use extern?
     const string ADD_CMD_KEYWORD { "add" };
     const string RM_CMD_KEYWORD { "rm" };
     const string UPDATE_CMD_KEYWORD { "update" };
