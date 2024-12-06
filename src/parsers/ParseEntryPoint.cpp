@@ -3,8 +3,10 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <tuple> 
 
-void parseCommand(const std::string& command) {
+// May choose to change to another type later on...
+std::tuple<std::string, std::string, std::map<std::string, std::string>, std::vector<std::string>> parseCommand(const std::string& command) {
     // Use a stringstream to parse the command
     std::stringstream ss(command);
     std::string keyword;
@@ -65,5 +67,7 @@ void parseCommand(const std::string& command) {
     for (const auto& t : tagsWithoutValues) {
         std::cout << "  " << t << std::endl;
     }
+
+    return {keyword, value, tagsWithValues, tagsWithoutValues};
 }
 
