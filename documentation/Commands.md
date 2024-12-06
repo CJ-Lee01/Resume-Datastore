@@ -1,5 +1,5 @@
 # Commands
-- ```add <type> [-kw|--keyword keywords...] [-i|--important]``` 
+- ```add <type> [-i|--important]``` 
   - Opens a text editor as well to allow users to enter further details.
 - ```add (-t | --type) newType```
   - Adds a new component type to the program. Requires it in the following format: `Parent/newType`
