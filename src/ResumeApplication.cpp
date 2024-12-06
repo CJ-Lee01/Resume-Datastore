@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include "parsers/ParseEntryPoint.h"
+
 void resumeApplication() {
     std::string userInput;
 
