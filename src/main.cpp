@@ -1,7 +1,6 @@
-#include <iostream>
-#include <string>
+#include "ResumeApplication.h"
 
 int main() {
-  std::cout << "Test\n";
+  resumeApplication();
   return 0;
 }
