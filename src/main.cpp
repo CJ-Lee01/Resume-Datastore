@@ -1,6 +1,7 @@
-#include "ResumeDatastore.h"
+#include <iostream>
+#include <string>
 
 int main() {
-  resumeDatastore();
+  std::cout << "Test\n";
   return 0;
 }

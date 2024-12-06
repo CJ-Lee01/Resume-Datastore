@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-int resumeDatastore() {
+void resumeApplication() {
     std::string userInput;
 
     while (true) {
@@ -19,6 +19,4 @@ int resumeDatastore() {
     }
 
     std::cout << "Goodbye!" << std::endl;
-
-    return 0;
 }
