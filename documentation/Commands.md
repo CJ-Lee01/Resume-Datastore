@@ -1,0 +1,27 @@
+# Commands
+- ```add <type> [-kw|--keyword keywords...] [-i|--important]``` 
+  - Opens a text editor as well to allow users to enter further details.
+- ```add (-t | --type) newType```
+  - Adds a new component type to the program. Requires it in the following format: `Parent/newType`
+- ```add (-kw | --keyword) keyword [-p|-parent parentkeyword]```
+  - Adds new keywords and hiearchy to keywords
+- ```rm id```
+  - Removes the component with the id.
+- ```rm (-t | --type) type [-f | --force]```
+  - Removes the type from the program. Will fail if there are existing components with the type. If forced, will delete those components as well.
+- ```update id [(-t | --type) newType] [-i|--important]```
+  - Updates the component with the id. If the new type is specified or if its importance is updated, it will not open the editor. Otherwise, it will open the editor.
+- ```update (-t | --type) type```
+  - Updates the name of the type of the component.
+- ```update (-kw | --keyword) keyword [-p|-parent parentkeyword]```
+  - Updates the hierachy of the keyword. If parent is not specified, the keyword is assumed to have no parent.
+- ```search keywords...```
+  - Searches for components with the relevant keywords
+- ```ls (-kw|-t)```
+  - List all keywords or types with their hiearchy
+- ```build keywords...```
+  - Tries to build a resume with the given keywords.
+- ```clean```
+  - Cleans up any stagnant data in the application.
+- ```exit```
+  - Saves and exits the application.
