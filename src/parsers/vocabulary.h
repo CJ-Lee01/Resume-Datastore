@@ -1,5 +1,5 @@
-#ifndef VOCAB_H
-#define VOCAB_H
+#ifndef COMMAND_VOCAB_H
+#define COMMAND_VOCAB_H
 
 // define your own namespace to hold constants
 namespace vocab

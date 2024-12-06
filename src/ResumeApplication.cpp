@@ -15,7 +15,7 @@ void resumeApplication() {
         }
 
         // Echo the user input back
-        std::cout << "You entered: " << userInput << std::endl;
+        parseCommand(userInput);
     }
 
     std::cout << "Goodbye!" << std::endl;
