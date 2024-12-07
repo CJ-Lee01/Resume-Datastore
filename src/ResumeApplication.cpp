@@ -2,6 +2,7 @@
 #include <string>
 
 #include "parsers/ParseEntryPoint.h"
+#include "parsers/IParser.h"
 
 void resumeApplication() {
     std::string userInput;
@@ -17,7 +18,13 @@ void resumeApplication() {
         }
 
         // Echo the user input back
-        parseCommand(userInput);
+        // type is ICommand.
+        auto command = parseCommand(userInput); // compiler pls help me
+        if (command) {
+            command->execute();
+        } else {
+            std::cerr << "Command could not be found.";
+        }
     }
 
     std::cout << "Goodbye!" << std::endl;

@@ -6,7 +6,9 @@
 #include <tuple>
 #include <map>
 
+#include <IParser.h>
+
 using namespace std;
 
-tuple<string, string, map<string, string>, vector<string>> parseCommand(const std::string& command);
+unique_ptr<ICommand> parseCommand(const string command);
 #endif

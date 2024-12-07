@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 #include <tuple> 
+#include <memory>
+
+#include <IParser.h>
 
 using namespace std;
 
@@ -17,7 +20,7 @@ string removePrefix(const std::string& tag) {
 }
 
 // May choose to change to another type later on...
-tuple<string, string, map<string, string>, vector<string>> parseCommand(const string& command) {
+unique_ptr<ICommand> parseCommand(const string command) {
     // Use a stringstream to parse the command
     stringstream ss(command);
     string keyword;
@@ -63,7 +66,8 @@ tuple<string, string, map<string, string>, vector<string>> parseCommand(const st
         }
     }
 
-    return {keyword, mainValue, tagsWithValues, tagsWithoutValues};
+    std::unique_ptr<ICommand> cmd = parseController(keyword, mainValue, tagsWithValues, tagsWithoutValues);
+    return cmd;
 }
 
 void printResults(string keyword, string mainValue, map<string, string> tagsWithValues, vector<string> tagsWithoutValues) {
