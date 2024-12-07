@@ -2,5 +2,5 @@
 
 class IParser {
   public:
-  virtual CommandResult execute() = 0;
+  virtual CommandResult execute();
 };

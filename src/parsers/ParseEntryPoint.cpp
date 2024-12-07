@@ -5,12 +5,14 @@
 #include <vector>
 #include <tuple> 
 
+using namespace std;
+
 // May choose to change to another type later on...
-std::tuple<std::string, std::string, std::map<std::string, std::string>, std::vector<std::string>> parseCommand(const std::string& command) {
+tuple<string, string, map<string, string>, vector<string>> parseCommand(const string& command) {
     // Use a stringstream to parse the command
-    std::stringstream ss(command);
-    std::string keyword;
-    std::string mainValue;
+    stringstream ss(command);
+    string keyword;
+    string mainValue;
 
     // Extract the first part: the keyword
     ss >> keyword;
@@ -20,15 +22,15 @@ std::tuple<std::string, std::string, std::map<std::string, std::string>, std::ve
         // If reading fails or if the main value starts with '-', it means it's missing
         mainValue = "";
         ss.clear();
-        ss.seekg(keyword.length(), std::ios::beg);  // Rewind to start parsing tags
+        ss.seekg(keyword.length(), ios::beg);  // Rewind to start parsing tags
     }
 
     // Map to store tag-value pairs and vector to store tags without values
-    std::map<std::string, std::string> tagsWithValues;
-    std::vector<std::string> tagsWithoutValues;
+    map<string, string> tagsWithValues;
+    vector<string> tagsWithoutValues;
 
-    std::string tag;
-    std::string value;
+    string tag;
+    string value;
 
     // Loop through the rest of the command to extract tags and values
     while (ss >> tag) {
@@ -53,19 +55,19 @@ std::tuple<std::string, std::string, std::map<std::string, std::string>, std::ve
     }
 
     // Output the parsed command
-    std::cout << "Keyword: " << keyword << std::endl;
+    std::cout << "Keyword: " << keyword << endl;
     if (!mainValue.empty()) {
-        std::cout << "Main value: " << mainValue << std::endl;
+        std::cout << "Main value: " << mainValue << endl;
     } else {
-        std::cout << "Main value: (none)" << std::endl;
+        std::cout << "Main value: (none)" << endl;
     }
-    std::cout << "Tags with values:" << std::endl;
+    std::cout << "Tags with values:" << endl;
     for (const auto& pair : tagsWithValues) {
         std::cout << "  " << pair.first << " : " << pair.second << std::endl;
     }
-    std::cout << "Tags without values:" << std::endl;
+    std::cout << "Tags without values:" << endl;
     for (const auto& t : tagsWithoutValues) {
-        std::cout << "  " << t << std::endl;
+        std::cout << "  " << t << endl;
     }
 
     return {keyword, value, tagsWithValues, tagsWithoutValues};
