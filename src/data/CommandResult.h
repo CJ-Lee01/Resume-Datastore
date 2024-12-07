@@ -7,13 +7,23 @@ class CommandResult {
   virtual void print();
 };
 
-class ErrorResult: CommandResult {
+class ErrorResult: public CommandResult {
   private:
   std::exception err;
   std::string msg;
   
   public:
   ErrorResult(std::exception err, std::string msg);
+  void print();
+};
 
+
+
+class SuccessResult: public CommandResult {
+  private:
+  std::string msg;
+
+  public:
+  SuccessResult(std::string msg);
   void print();
 };

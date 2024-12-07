@@ -7,6 +7,15 @@
 
 using namespace std;
 
+string removePrefix(const std::string& tag) {
+    size_t pos = tag.find_first_not_of('-');
+    if (pos == std::string::npos) {
+        // If the entire string is made up of hyphens, return an empty string
+        return "";
+    }
+    return tag.substr(pos);
+}
+
 // May choose to change to another type later on...
 tuple<string, string, map<string, string>, vector<string>> parseCommand(const string& command) {
     // Use a stringstream to parse the command
@@ -38,7 +47,7 @@ tuple<string, string, map<string, string>, vector<string>> parseCommand(const st
             ss >> value;
             if (value[0] == '-') {
                 // If the value starts with '-', it means the tag has no value
-                tagsWithoutValues.push_back(tag);
+                tagsWithoutValues.push_back(removePrefix(tag));
                 // Put the value back for the next iteration (as it's actually the next tag)
                 ss.putback(' ');  // Put back the space
                 for (int i = value.length() - 1; i >= 0; --i) {
@@ -46,7 +55,7 @@ tuple<string, string, map<string, string>, vector<string>> parseCommand(const st
                 }
             } else {
                 // If the value doesn't start with '-', store the tag-value pair
-                tagsWithValues[tag] = value;
+                tagsWithValues[removePrefix(tag)] = value;
             }
         } else {
             std::cerr << "Error: Unexpected token " << tag << " (tags should start with '-')" << std::endl;
@@ -54,7 +63,10 @@ tuple<string, string, map<string, string>, vector<string>> parseCommand(const st
         }
     }
 
-    // Output the parsed command
+    return {keyword, mainValue, tagsWithValues, tagsWithoutValues};
+}
+
+void printResults(string keyword, string mainValue, map<string, string> tagsWithValues, vector<string> tagsWithoutValues) {
     std::cout << "Keyword: " << keyword << endl;
     if (!mainValue.empty()) {
         std::cout << "Main value: " << mainValue << endl;
@@ -69,7 +81,4 @@ tuple<string, string, map<string, string>, vector<string>> parseCommand(const st
     for (const auto& t : tagsWithoutValues) {
         std::cout << "  " << t << endl;
     }
-
-    return {keyword, value, tagsWithValues, tagsWithoutValues};
 }
-
