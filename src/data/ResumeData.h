@@ -1,6 +1,10 @@
+#ifndef RESUMEDATA_H
+#define RESUMEDATA_H
+#include <string>
+#include <filesystem>
 namespace resumeData {
-  #include <string>
-  #include <filesystem>
+
+
   using ComponentType = std::string;
   using Keyword = std::string;
   using Content = std::string;
@@ -14,5 +18,9 @@ namespace resumeData {
 
     Component(ComponentType type, Keyword kw, Content content, Id id)
         : type(std::move(type)), kw(std::move(kw)), content(std::move(content)), id(std::move(id)) {}
+
+    
   };
 };
+
+#endif

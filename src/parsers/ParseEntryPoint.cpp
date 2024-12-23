@@ -19,9 +19,8 @@ string removePrefix(const std::string& tag) {
     return tag.substr(pos);
 }
 
-// May choose to change to another type later on...
-unique_ptr<ICommand> parseCommand(const string command) {
-    // Use a stringstream to parse the command
+// Throws ParseException if string is invalid.
+tuple<string, string, map<string, string>, vector<string>> getCommandArgs(const string command) {
     stringstream ss(command);
     string keyword;
     string mainValue;
@@ -61,10 +60,20 @@ unique_ptr<ICommand> parseCommand(const string command) {
                 tagsWithValues[removePrefix(tag)] = value;
             }
         } else {
-            std::cerr << "Error: Unexpected token " << tag << " (tags should start with '-')" << std::endl;
-            return;
+            throw ParseException("Error: Unexpected token " + tag);
         }
     }
+    return tuple(keyword, mainValue, tagsWithValues, tagsWithoutValues);
+}
+
+// May choose to change to another type later on...
+// Throws ParseException if string is invalid.
+unique_ptr<ICommand> parseCommand(const string command) {
+    const tuple t = getCommandArgs(command);
+    const string keyword = get<0>(t);
+    const string mainValue = get<1>(t);
+    const map<string, string> tagsWithValues = get<2>(t);
+    const vector<string> tagsWithoutValues = get<3>(t);
 
     std::unique_ptr<ICommand> cmd = parseController(keyword, mainValue, tagsWithValues, tagsWithoutValues);
     return cmd;
